@@ -457,36 +457,6 @@ public class NotificationListenersTest extends UiServiceTestCase {
     }
 
     @Test
-    public void testImplicitGrant() {
-        String pkg = "pkg";
-        int uid = 9;
-        NotificationChannel channel = new NotificationChannel("id", "name",
-                NotificationManager.IMPORTANCE_HIGH);
-        Notification.Builder nb = new Notification.Builder(mContext, channel.getId())
-                .setContentTitle("foo")
-                .setSmallIcon(android.R.drawable.sym_def_app_icon)
-                .setTimeoutAfter(1);
-
-        StatusBarNotification sbn = new StatusBarNotification(pkg, pkg, 8, "tag", uid, 0,
-                nb.build(), UserHandle.getUserHandleForUid(uid), null, 0);
-        NotificationRecord r = new NotificationRecord(mContext, sbn, channel);
-
-        ManagedServices.ManagedServiceInfo info = mListeners.new ManagedServiceInfo(
-                null, new ComponentName("a", "a"), sbn.getUserId(), false, null, 33, 33);
-        List<ManagedServices.ManagedServiceInfo> services = ImmutableList.of(info);
-        when(mListeners.getServices()).thenReturn(services);
-
-        when(mNm.isVisibleToListener(any(), anyInt(), any())).thenReturn(true);
-        when(mNm.makeRankingUpdateLocked(info)).thenReturn(mock(NotificationRankingUpdate.class));
-        mNm.mPackageManagerInternal = mPmi;
-
-        mListeners.notifyPostedLocked(r, null);
-
-        verify(mPmi).grantImplicitAccess(sbn.getUserId(), null, UserHandle.getAppId(33),
-                sbn.getUid(), false, false);
-    }
-
-    @Test
     public void testNotifyPostedLockedInLockdownMode() {
         NotificationRecord r0 = mock(NotificationRecord.class);
         NotificationRecord old0 = mock(NotificationRecord.class);

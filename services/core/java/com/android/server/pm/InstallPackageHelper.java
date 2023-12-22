@@ -2108,7 +2108,7 @@ final class InstallPackageHelper {
                         if (installedForCurrentUser || !restrictedByPolicy) {
                             ps.setInstalled(true, currentUserId);
                             ps.setEnabled(COMPONENT_ENABLED_STATE_DEFAULT, currentUserId,
-                                    installerPackageName);
+                                installerPackageName);
                         } else {
                             ps.setInstalled(false, currentUserId);
                         }
