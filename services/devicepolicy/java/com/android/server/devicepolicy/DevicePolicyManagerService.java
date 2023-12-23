@@ -446,6 +446,7 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
     // FrameworkParsingPackageUtils#MAX_FILE_NAME_SIZE, Android packages are used in dir names.
     private static final int MAX_PACKAGE_NAME_LENGTH = 223;
 
+    private static final int MAX_PROFILE_NAME_LENGTH = 200;
     private static final int MAX_LONG_SUPPORT_MESSAGE_LENGTH = 20000;
     private static final int MAX_SHORT_SUPPORT_MESSAGE_LENGTH = 200;
     private static final int MAX_ORG_NAME_LENGTH = 200;

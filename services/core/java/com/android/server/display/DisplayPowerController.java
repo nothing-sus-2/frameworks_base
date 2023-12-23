@@ -495,6 +495,9 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
     private int mOnProximityPositiveMessages;
     private int mOnProximityNegativeMessages;
 
+    // Whether auto brightness is applied one shot when screen is turned on
+    private boolean mAutoBrightnessOneShot;
+
     // Animators.
     private ObjectAnimator mColorFadeOnAnimator;
     private ObjectAnimator mColorFadeOffAnimator;
