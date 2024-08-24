@@ -79,8 +79,7 @@ public class PixelPropsUtils {
             "com.breel.wallpapers20",
             "com.nhs.online.nhsonline",
             "com.netflix.mediaclient",
-            "com.nothing.smartcenter",
-            "com.netflix.mediaclient"
+            "com.nothing.smartcenter"
     };
 
     // Packages to Keep with original device
@@ -277,12 +276,16 @@ public class PixelPropsUtils {
                 // Alter build parameters to avoid hardware attestation enforcement
                 setPropValue("BRAND", "google");
                 setPropValue("MANUFACTURER", "Google");
-                setBuildField("DEVICE", "husky");
-                setPropValue("ID", "AP31.240617.009");
-                setBuildField("FINGERPRINT", "google/husky_beta/husky:15/AP31.240617.009/12094726:user/release-keys");
-                setBuildField("MODEL", "Pixel 8 Pro");
-                setBuildField("PRODUCT", "husky_beta");
-                setVersionFieldString("SECURITY_PATCH", "2024-07-05");
+                setBuildField("DEVICE", "caiman");
+                setPropValue("ID", "AD1A.240530.047.U1");
+                setBuildField("FINGERPRINT", "google/caiman/caiman:14/AD1A.240530.047.U1/12150698:user/release-keys");
+                setBuildField("MODEL", "Pixel 9 Pro");
+                setBuildField("PRODUCT", "caiman");
+        	setPropValue("TYPE", "user");
+        	setPropValue("TAGS", "release-keys");
+                setVersionFieldString("INCREMENTAL", "12150698");
+		setVersionFieldString("SECURITY_PATCH", "2024-08-05");
+                setVersionFieldInt("DEVICE_INITIAL_SDK_INT", 34);
                 return true;
             }
         }
@@ -398,6 +401,18 @@ public class PixelPropsUtils {
                     setPropValue(key, value);
                 }
             }
+        }
+    }
+
+    private static void setVersionFieldInt(String key, int value) {
+        try {
+            if (DEBUG) Log.d(TAG, "Defining prop " + key + " to " + value);
+            Field field = Build.VERSION.class.getDeclaredField(key);
+            field.setAccessible(true);
+            field.set(null, value);
+            field.setAccessible(false);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            Log.e(TAG, "Failed to set prop " + key, e);
         }
     }
 
