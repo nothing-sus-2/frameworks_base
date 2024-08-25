@@ -77,14 +77,20 @@ class KeyguardMediaControllerTest : SysuiTestCase() {
         // default state is positive, media should show up
         whenever(mediaHost.visible).thenReturn(true)
         whenever(statusBarStateController.state).thenReturn(StatusBarState.KEYGUARD)
+        whenever(notificationLockscreenUserManager.shouldShowLockscreenNotifications())
+                .thenReturn(true)
         whenever(mediaHost.hostView).thenReturn(hostView)
         hostView.layoutParams = FrameLayout.LayoutParams(100, 100)
+        testableLooper = TestableLooper.get(this)
+        fakeHandler = FakeHandler(testableLooper.looper)
         keyguardMediaController =
             KeyguardMediaController(
                 mediaHost,
                 bypassController,
                 statusBarStateController,
                 context,
+                settings,
+                fakeHandler,
                 configurationController,
             )
         keyguardMediaController.attachSinglePaneContainer(mediaContainerView)
@@ -111,6 +117,34 @@ class KeyguardMediaControllerTest : SysuiTestCase() {
         whenever(statusBarStateController.state).thenReturn(state)
         keyguardMediaController.refreshMediaPosition()
         assertThat(mediaContainerView.visibility).isEqualTo(visibility)
+    }
+
+    @Test
+    fun testHiddenOnKeyguard_whenMediaOnLockScreenDisabled() {
+        settings.putInt(Settings.Secure.MEDIA_CONTROLS_LOCK_SCREEN, 0)
+
+        keyguardMediaController.refreshMediaPosition()
+
+        assertThat(mediaContainerView.visibility).isEqualTo(GONE)
+    }
+
+    @Test
+    fun testAvailableOnKeyguard_whenMediaOnLockScreenEnabled() {
+        settings.putInt(Settings.Secure.MEDIA_CONTROLS_LOCK_SCREEN, 1)
+
+        keyguardMediaController.refreshMediaPosition()
+
+        assertThat(mediaContainerView.visibility).isEqualTo(VISIBLE)
+    }
+
+    @Test
+    fun testHiddenOnKeyguard_whenNotificationsAreHidden() {
+        whenever(notificationLockscreenUserManager.shouldShowLockscreenNotifications())
+                .thenReturn(false)
+
+        keyguardMediaController.refreshMediaPosition()
+
+        assertThat(mediaContainerView.visibility).isEqualTo(GONE)
     }
 
     @Test

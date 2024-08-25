@@ -30,6 +30,7 @@ import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Main
 import com.android.systemui.media.dagger.MediaModule.KEYGUARD
 import com.android.systemui.plugins.statusbar.StatusBarStateController
+import com.android.systemui.statusbar.NotificationLockscreenUserManager
 import com.android.systemui.statusbar.StatusBarState
 import com.android.systemui.statusbar.SysuiStatusBarStateController
 import com.android.systemui.statusbar.notification.stack.MediaContainerView
@@ -51,6 +52,7 @@ constructor(
     @param:Named(KEYGUARD) private val mediaHost: MediaHost,
     private val bypassController: KeyguardBypassController,
     private val statusBarStateController: SysuiStatusBarStateController,
+    private val notifLockscreenUserManager: NotificationLockscreenUserManager,
     private val context: Context,
     private val secureSettings: SecureSettings,
     @Main private val handler: Handler,
@@ -202,7 +204,7 @@ constructor(
             mediaHost.visible &&
                 !bypassController.bypassEnabled &&
                 keyguardOrUserSwitcher &&
-                shouldBeVisibleForSplitShade()
+                notifLockscreenUserManager.shouldShowLockscreenNotifications()
         if (visible) {
             showMediaPlayer()
         } else {
