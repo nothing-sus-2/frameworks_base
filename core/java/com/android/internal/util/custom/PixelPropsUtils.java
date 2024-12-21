@@ -276,15 +276,15 @@ public class PixelPropsUtils {
                 // Alter build parameters to avoid hardware attestation enforcement
                 setPropValue("BRAND", "google");
                 setPropValue("MANUFACTURER", "Google");
-                setBuildField("DEVICE", "caiman");
-                setPropValue("ID", "AD1A.240530.047.U1");
-                setBuildField("FINGERPRINT", "google/caiman/caiman:14/AD1A.240530.047.U1/12150698:user/release-keys");
+                setBuildField("DEVICE", "tokay");
+                setPropValue("ID", "BP11.241025.006");
+                setBuildField("FINGERPRINT", "google/tokay_beta/tokay:15/BP11.241025.006/12620009:user/release-keys");
                 setBuildField("MODEL", "Pixel 9 Pro");
-                setBuildField("PRODUCT", "caiman");
+                setBuildField("PRODUCT", "tokay_beta");
         	setPropValue("TYPE", "user");
         	setPropValue("TAGS", "release-keys");
-                setVersionFieldString("INCREMENTAL", "12150698");
-		setVersionFieldString("SECURITY_PATCH", "2024-08-05");
+                setVersionFieldString("INCREMENTAL", "12620009");
+		setVersionFieldString("SECURITY_PATCH", "2024-11-05");
                 setVersionFieldInt("DEVICE_INITIAL_SDK_INT", 34);
                 return true;
             }
